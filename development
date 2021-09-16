@@ -1,1 +1,17 @@
- 
+apiVersion: run.tanzu.vmware.com/v1alpha1
+kind: TanzuKubernetesCluster
+metadata:
+  name: dev-cls-1
+  namespace: development
+spec:
+  distribution:
+    fullVersion: v1.20.7---vmware.1-tkg.1.7fb9067
+  topology:
+    controlPlane:
+      count: 1
+      class: best-effort-medium
+      storageClass: wcp
+    workers:
+      count: 1
+      class: best-effort-medium
+      storageClass: wcp
