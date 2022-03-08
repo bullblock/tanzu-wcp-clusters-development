@@ -1,0 +1,32 @@
+apiVersion: run.tanzu.vmware.com/v1alpha2
+kind: TanzuKubernetesCluster
+metadata:
+  name: development-cls1
+  namespace: development
+spec:
+  topology:
+    controlPlane:
+      replicas: 3
+      vmClass: best-effort-medium
+      storageClass: dc1-cls1-datastore
+      tkr:
+        reference:
+          name: v1.21.6---vmware.1-tkg.1.b3d708a
+         #name: v1.20.12---vmware.1-tkg.1.b9a42f3
+         #name: v1.19.16---vmware.1-tkg.1.df910e2
+    nodePools:
+    - name: development-cls1-pool
+      replicas: 3
+      vmClass: best-effort-medium
+      storageClass: dc1-cls1-datastore
+      tkr:
+        reference:
+          name: v1.21.6---vmware.1-tkg.1.b3d708a
+         #name: v1.20.12---vmware.1-tkg.1.b9a42f3
+         #name: v1.19.16---vmware.1-tkg.1.df910e2
+  settings:
+    storage:
+      defaultClass: dc1-cls1-datastore
+    network:
+      cni:
+        name: antrea
