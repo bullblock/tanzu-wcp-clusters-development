@@ -1,0 +1,38 @@
+apiVersion: run.tanzu.vmware.com/v1alpha2
+kind: TanzuKubernetesCluster
+metadata:
+  name: test
+  namespace: development
+spec:
+  topology:
+    controlPlane:
+      replicas: 3
+      vmClass: guaranteed-medium
+      storageClass: dc1-cls1-datastore
+      volumes:
+        - name: etcd
+          mountPath: /var/lib/etcd
+          capacity:
+            storage: 16Gi
+      tkr:
+        reference:
+          name: v1.21.6---vmware.1-tkg.1.b3d708a
+    nodePools:
+    - name: worker-nodepool-vsphere
+      replicas: 3
+      vmClass: guaranteed-large
+      storageClass: dc1-cls1-datastore
+      volumes:
+        - name: containerd
+          mountPath: /var/lib/containerd
+          capacity:
+            storage: 64Gi
+      tkr:
+        reference:
+          name: v1.21.6---vmware.1-tkg.1.b3d708a
+  settings:
+    storage:
+      defaultClass: dc1-cls1-datastore
+    network:
+      cni:
+        name: antrea
